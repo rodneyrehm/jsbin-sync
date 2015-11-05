@@ -51,7 +51,7 @@ module.exports = function(file, jsbin, options) {
       return null;
     }
 
-    if (!_data.url) {
+    if (!_data.url && !options.force) {
       return uploadFile();
     }
 
