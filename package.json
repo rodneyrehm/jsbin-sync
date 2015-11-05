@@ -1,0 +1,29 @@
+{
+  "name": "jsbin-sync",
+  "version": "0.1.0",
+  "description": "Simple client to synchronize files to JSBin.com",
+  "main": "src/index.js",
+  "dependencies": {
+    "cheerio": "^0.19.0",
+    "es6-denodeify": "^0.1.5",
+    "jsbin-client": "^0.1.1",
+    "redent": "^1.0.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rodneyrehm/jsbin-sync.git"
+  },
+  "keywords": [
+    "jsbin"
+  ],
+  "author": "Rodney Rehm <rodney.rehm@medialize.de> (http://rodneyrehm.de/en/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rodneyrehm/jsbin-sync/issues"
+  },
+  "homepage": "https://github.com/rodneyrehm/jsbin-sync#readme"
+}
