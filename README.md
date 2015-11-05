@@ -48,12 +48,12 @@ Except for the added `<link rel="jsbin">` to remember the bin's URL, the describ
 
 ## Usage
 
-```
+```js
 // make sure process.env.JSBIN_TOKEN is set
-var glob = require('glob');
-var jsbinSync = require('jsbin-sync');
+const glob = require('glob');
+const jsbinSync = require('jsbin-sync');
 
-var options = {
+const options = {
   // [optional] JSBin Access Token
   token: process.env.JSBIN_TOKEN,
   // [optional] JSBin API Endpoint
