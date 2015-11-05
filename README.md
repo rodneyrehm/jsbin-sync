@@ -48,6 +48,38 @@ Except for the added `<link rel="jsbin">` to remember the bin's URL, the describ
 
 ## Usage
 
+```
+// make sure process.env.JSBIN_TOKEN is set
+var glob = require('glob');
+var jsbinSync = require('jsbin-sync');
+
+var options = {
+  // [optional] JSBin Access Token
+  token: process.env.JSBIN_TOKEN,
+  // [optional] JSBin API Endpoint
+  endpoint: 'https://jsbin.com/api/',
+  // [optional] force upload of new snapshot even when files haven't changed
+  force: false,
+  // [optional] selector for CSS container element
+  css: '#jsbin-css',
+  // [optional] selector for JS container element
+  js: '#jsbin-javascript',
+};
+
+glob('demo/*.html', {realpath: true}, function(error, files) {
+  jsbinSync(files, options)
+    .then(map => console.log('synchronized', map))
+    .catch(error => console.error(error.stack));
+});
+
+/*
+  returns {
+    '/path/to/alpha.html': 'sabuqe',
+    '/path/to/bravo.html': 'muvubi'
+  }
+*/
+```
+
 
 ## Changelog
 
