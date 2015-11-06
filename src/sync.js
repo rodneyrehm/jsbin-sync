@@ -16,12 +16,21 @@ module.exports = function(file, jsbin, options) {
     }
 
     if (_data.url === response.url) {
-      return response.url;
+      return {
+        url: _data.url,
+        snapshot: response.snapshot,
+        status: 'modified',
+      };
     }
 
     var html = document.updateBin(_content, response.url);
-    return writeFile(file, html)
-      .then(() => response.url);
+    return writeFile(file, html).then(function() {
+      return {
+        url: response.url,
+        snapshot: response.snapshot,
+        status: 'created',
+      };
+    });
   };
 
   var uploadFile = function() {
@@ -36,7 +45,11 @@ module.exports = function(file, jsbin, options) {
       || bin.javascript !== _data.javascript;
 
     if (!hasChanges) {
-      return _data.url;
+      return {
+        url: _data.url,
+        snapshot: bin.snapshot,
+        status: 'unmodified',
+      };
     }
 
     return uploadFile();
@@ -47,8 +60,12 @@ module.exports = function(file, jsbin, options) {
     _data = document.parse(content, options);
 
     if (!_data) {
-      console.log('Skipping ' + file + ' because <link rel="jsbin"> is missing');
-      return null;
+      return {
+        url: null,
+        snapshot: null,
+        status: 'skipped',
+        message: '<link rel="jsbin"> not found',
+      };
     }
 
     if (!_data.url && !options.force) {
@@ -58,5 +75,12 @@ module.exports = function(file, jsbin, options) {
     return jsbin.read(_data.url).then(verifyBeforeUpload);
   }
 
-  return readFile(file, 'utf8').then(handleFile);
+  return readFile(file, 'utf8').then(handleFile, function(error) {
+    return {
+      url: null,
+      snapshot: null,
+      status: 'missing',
+      message: error.message,
+    }
+  });
 }

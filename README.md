@@ -66,7 +66,7 @@ const options = {
   js: '#jsbin-javascript',
 };
 
-glob('demo/*.html', {realpath: true}, function(error, files) {
+glob('/path/to/*.html', {realpath: true}, function(error, files) {
   jsbinSync(files, options)
     .then(map => console.log('synchronized', map))
     .catch(error => console.error(error.stack));
@@ -74,14 +74,43 @@ glob('demo/*.html', {realpath: true}, function(error, files) {
 
 /*
   returns {
-    '/path/to/alpha.html': 'sabuqe',
-    '/path/to/bravo.html': 'muvubi'
+    "/path/to/alpha.html": {
+      "url": "aabbcc",
+      "snapshot": 10,
+      "status": "unmodified"
+    },
+    "/path/to/bravo.html": {
+      "url": "aabbcc",
+      "snapshot": 6,
+      "status": "modified"
+    },
+    "/path/to/charlie.html": {
+      "url": "aabbcc",
+      "snapshot": 1,
+      "status": "created"
+    },
+    "/path/to/delta.html": {
+      "url": null,
+      "snapshot": null,
+      "status": "skipped",
+      "message": "<link rel=\"jsbin\"> not found"
+    },
+    "/path/to/echo.html": {
+      "url": null,
+      "snapshot": null,
+      "status": "missing",
+      "message": "ENOENT: no such file or directory, open '/path/to/echo.html'"
+    }
   }
 */
 ```
 
 
 ## Changelog
+
+### 0.2.0 (November 5th 2015) ###
+
+* changing returned data structure
 
 ### 0.1.0 (November 5th 2015) ###
 

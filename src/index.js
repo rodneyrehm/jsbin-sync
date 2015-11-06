@@ -12,17 +12,13 @@ module.exports = function(files, options) {
     endpoint: options.endpoint,
   });
 
-  return Promise.all(files.map(file => sync(file, jsbin, options))).then(function(urls) {
+  return Promise.all(files.map(file => sync(file, jsbin, options))).then(function(states) {
     var map = {};
-    urls.forEach(function(url, index) {
-      if (!url) {
-        return;
-      }
-
+    states.forEach(function(state, index) {
       var file = files[index];
-      map[file] = url;
+      map[file] = state;
     });
-    
+
     return map;
   });
 };
