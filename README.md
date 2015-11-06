@@ -131,7 +131,11 @@ When installed globally (`npm install -g jsbin-sync`), a cli is made available:
 
 ## Changelog
 
-### 0.2.0 (November 5th 2015) ###
+### 0.2.1 (November 6th 2015) ###
+
+* adding shebang to cli.js
+
+### 0.2.0 (November 6th 2015) ###
 
 * changing returned data structure
 * adding command line interface
