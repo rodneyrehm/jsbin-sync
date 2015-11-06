@@ -105,12 +105,36 @@ glob('/path/to/*.html', {realpath: true}, function(error, files) {
 */
 ```
 
+## Command Line Interface
+
+When installed globally (`npm install -g jsbin-sync`), a cli is made available:
+
+```
+➜ jsbin-sync --help
+
+  Usage: jsbin-sync [options] <file ...>
+
+  publish files to JSBin.com
+
+  Options:
+
+    -h, --help             output usage information
+    -V, --version          output the version number
+    --css <selector>       selector for CSS container, defaults to "#jsbin-css"
+    --js <selector>        selector for JS container, defaults to "#jsbin-javascript"
+    --force                force upload for unchanged files
+    --silent               Do not output status messages
+    --json                 output status messages as JSON
+    --token <token>        JSBin Access Token, defaults to env.JSBIN_TOKEN
+    --endpoint <endpoint>  JSBin API, defaults to https://jsbin.com/api/
+```
 
 ## Changelog
 
 ### 0.2.0 (November 5th 2015) ###
 
 * changing returned data structure
+* adding command line interface
 
 ### 0.1.0 (November 5th 2015) ###
 
