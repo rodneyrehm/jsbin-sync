@@ -14,6 +14,9 @@ const jsbin = require('jsbin-sync');
 
 // upload files from disk
 var promise = jsbin.upload(files, options);
+
+// download bins to disk
+var promise = jsbin.backup(directory, options);
 ```
 
 ### Default Options
@@ -38,11 +41,13 @@ The following default values are used unless overwritten via the options object:
 const glob = require('glob');
 
 const options = {
-  // [optional] JSBin Access Token
+  // [optional] JSBin access token
   token: process.env.JSBIN_TOKEN,
-  // [optional] JSBin API Endpoint
+  // [optional] JSBin API endpoint
   endpoint: 'https://jsbin.com/api/',
-  // [optional] force upload of new snapshot even when files haven't changed
+  // [optional] Maximum number of concurrent requests
+  concurrency: 5,
+  // [optional] Force upload of new snapshot even when files haven't changed
   force: false,
   // [optional] Selector for CSS container element
   css: '#jsbin-css',
@@ -52,7 +57,7 @@ const options = {
 
 glob('/path/to/*.html', {realpath: true}, function(error, files) {
   jsbin.upload(files, options)
-    .then(result => console.log('synchronized', result))
+    .then(result => console.log('upload result', result))
     .catch(error => console.error(error.stack));
 });
 ```
@@ -87,6 +92,39 @@ glob('/path/to/*.html', {realpath: true}, function(error, files) {
     "snapshot": null,
     "status": "missing",
     "message": "ENOENT: no such file or directory, open '/path/to/echo.html'"
+  }
+}
+```
+
+### API: Backup
+
+```js
+const options = {
+  // [optional] JSBin access token
+  token: process.env.JSBIN_TOKEN,
+  // [optional] JSBin API endpoint
+  endpoint: 'https://jsbin.com/api/',
+  // [optional] Maximum number of concurrent requests
+  concurrency: 5,
+  // [optional] Download all versions of the bins, rather than only the latest
+  includeSnapshots: false,
+};
+
+jsbin.upload(files, options)
+  .then(result => console.log('backup result', result))
+  .catch(error => console.error(error.stack));
+```
+
+`jsbin.backup` resolves to the following result data structure:
+
+```js
+{
+  "aabbcc": {
+    "1": "/path/to/aabbcc/aabbcc.1.html",
+    "2": "/path/to/aabbcc/aabbcc.2.html"
+  },
+  "bbccdd": {
+    "1": "/path/to/bbccdd/bbccdd.1.html"
   }
 }
 ```
@@ -158,10 +196,30 @@ The following deault values are used unless overwritten via CLI arguments:
     --json                       Output status messages as JSON
 ```
 
+### CLI: Backup
+
+```
+➜  bin/jsbin-sync backup --help
+
+  Usage: jsbin-sync-backup [options] <target directory>
+
+  download all bins to target directory
+
+  Options:
+
+    -h, --help                   output usage information
+    -V, --version                output the version number
+    --token <token>              JSBin access token
+    --endpoint <endpoint>        JSBin API endpoint
+    --concurrency <concurrency>  Number of parallel requests
+    --include-snapshots          Download all versions of the bins, rather than only the latest
+    --silent                     Do not output status messages
+    --json                       Output status messages as JSON
+```
 
 ---
 
-## File Structure for `upload`
+## File Structure For `upload`
 
 **Note:** While two-way synchronization is technically possible, currently only *local file to bin* upload is implemented.
 
@@ -210,7 +268,8 @@ Except for the added `<link rel="jsbin">` to remember the bin's URL, the describ
 * package returning map of functions, rather than `upload`
 * moving CLI code to `/bin`
 * switching CLI pattern to sub-commands
-* adding `concurrency` option to throttle number of parallel requests
+* adding option `concurrency` to throttle number of parallel requests
+* adding command `backup` to download all bins
 
 ### 0.2.1 (November 6th 2015) ###
 

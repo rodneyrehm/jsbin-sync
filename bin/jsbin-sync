@@ -6,6 +6,7 @@ var pkg = require('../package.json');
 program
   .version(pkg.version)
   .description('client to interact with JSBin.com')
+  .command('backup <target>', 'download all bins to target directory')
   .command('upload <files...>', 'synchronize local files to JSBin.com')
 
 program.defaultExecutable = 'help';

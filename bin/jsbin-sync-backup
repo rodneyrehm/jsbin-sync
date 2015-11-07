@@ -1,0 +1,83 @@
+#!/usr/bin/env node
+
+var path = require('path');
+var program = require('commander');
+var chalk = require('chalk');
+
+var pkg = require('../package.json');
+var defaults = require('../src/defaults');
+var backupFiles = require('../src/backup');
+
+var cwd = process.cwd();
+program
+  .version(pkg.version)
+  .description('download all bins to target directory')
+  .usage('[options] <target directory>')
+  // service configuration
+  .option('--token <token>', 'JSBin access token', defaults.token)
+  .option('--endpoint <endpoint>', 'JSBin API endpoint', defaults.endpoint)
+  .option('--concurrency <concurrency>', 'Number of parallel requests', defaults.concurrent, defaults.concurrency)
+  // synchronization options
+  .option('--include-snapshots', 'Download all versions of the bins, rather than only the latest')
+  // output configuration
+  .option('--silent', 'Do not output status messages')
+  .option('--json', 'Output status messages as JSON')
+  .parse(process.argv);
+
+// require the target directory
+var target = program.args[0];
+if (!target) {
+  program.help();
+}
+
+var options = {
+  // service configuration
+  token: program.token,
+  endpoint: program.endpoint,
+  concurrency: program.concurrency,
+  // synchronization options
+  includeSnapshots: program.includeSnapshots,
+};
+
+backupFiles(target, options)
+  .then(handleOutput)
+  .catch(handleError);
+
+function handleOutput(map) {
+  if (program.silent) {
+    return;
+  }
+
+  if (program.json) {
+    console.log(JSON.stringify(map, null, 2));
+    return;
+  }
+
+  Object.keys(map).forEach(function(url) {
+    var files = map[url];
+    var snapshots = Object.keys(files).map(Number).sort().reverse();
+    var latest = snapshots[0];
+
+    var latestFile = path.relative(cwd, files[latest]);
+    console.log(
+      chalk.magenta(url),
+      'at snapshot', chalk.magenta(latest),
+      'saved to', chalk.cyan(latestFile)
+    );
+
+    snapshots.slice(1).forEach(function(snapshot) {
+      console.log(
+        '      ',
+        'at snapshot', chalk.magenta(latest),
+        'saved to', chalk.cyan(latestFile)
+      );
+    });
+  });
+
+  return;
+}
+
+function handleError(error) {
+  console.error(error.stack);
+  process.exit(1);
+}
