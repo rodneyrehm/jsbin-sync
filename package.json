@@ -3,7 +3,7 @@
   "version": "0.2.1",
   "description": "Simple client to synchronize files to JSBin.com",
   "main": "src/index.js",
-  "bin": "src/cli.js",
+  "bin": "bin/jsbin-sync",
   "dependencies": {
     "chalk": "^1.1.1",
     "cheerio": "^0.19.0",

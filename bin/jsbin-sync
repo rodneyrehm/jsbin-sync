@@ -1,0 +1,12 @@
+#!/usr/bin/env node
+
+var program = require('commander');
+var pkg = require('../package.json');
+
+program
+  .version(pkg.version)
+  .description('client to interact with JSBin.com')
+  .command('upload <files...>', 'synchronize local files to JSBin.com')
+
+program.defaultExecutable = 'help';
+program.parse(process.argv);

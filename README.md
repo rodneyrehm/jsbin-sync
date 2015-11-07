@@ -51,7 +51,7 @@ Except for the added `<link rel="jsbin">` to remember the bin's URL, the describ
 ```js
 // make sure process.env.JSBIN_TOKEN is set
 const glob = require('glob');
-const jsbinSync = require('jsbin-sync');
+const jsbin = require('jsbin-sync');
 
 const options = {
   // [optional] JSBin Access Token
@@ -67,7 +67,7 @@ const options = {
 };
 
 glob('/path/to/*.html', {realpath: true}, function(error, files) {
-  jsbinSync(files, options)
+  jsbin.upload(files, options)
     .then(map => console.log('synchronized', map))
     .catch(error => console.error(error.stack));
 });
@@ -110,26 +110,51 @@ glob('/path/to/*.html', {realpath: true}, function(error, files) {
 When installed globally (`npm install -g jsbin-sync`), a cli is made available:
 
 ```
-➜ jsbin-sync --help
+➜  jsbin-sync
 
-  Usage: jsbin-sync [options] <file ...>
+  Usage: jsbin-sync [options] [command]
 
-  publish files to JSBin.com
+
+  Commands:
+
+    upload <files...>  synchronize local files to JSBin.com
+    help [cmd]         display help for [cmd]
+
+  client to interact with JSBin.com
+
+  Options:
+
+    -h, --help     output usage information
+    -V, --version  output the version number
+
+
+➜  jsbin-sync upload --help
+
+  Usage: jsbin-sync-upload [options] <file ...>
+
+  upload files to JSBin.com
 
   Options:
 
     -h, --help             output usage information
     -V, --version          output the version number
+    --token <token>        JSBin Access Token, defaults to env.JSBIN_TOKEN
+    --endpoint <endpoint>  JSBin API, defaults to https://jsbin.com/api/
     --css <selector>       selector for CSS container, defaults to "#jsbin-css"
     --js <selector>        selector for JS container, defaults to "#jsbin-javascript"
     --force                force upload for unchanged files
     --silent               Do not output status messages
     --json                 output status messages as JSON
-    --token <token>        JSBin Access Token, defaults to env.JSBIN_TOKEN
-    --endpoint <endpoint>  JSBin API, defaults to https://jsbin.com/api/
 ```
 
 ## Changelog
+
+### master ###
+
+* moving `src/sync.js` to `src/upload.js`
+* package returning map of functions, rather than `upload`
+* moving CLI code to `/bin`
+* switching CLI pattern to sub-commands
 
 ### 0.2.1 (November 6th 2015) ###
 

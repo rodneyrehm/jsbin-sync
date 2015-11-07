@@ -5,12 +5,15 @@ var program = require('commander');
 var chalk = require('chalk');
 
 var pkg = require('../package.json');
-var synchronizeFiles = require('./index');
+var uploadFiles = require('../src/upload');
 
 program
   .version(pkg.version)
-  .description('publish files to JSBin.com')
+  .description('upload files to JSBin.com')
   .usage('[options] <file ...>')
+  // service configuration
+  .option('--token <token>', 'JSBin Access Token, defaults to env.JSBIN_TOKEN')
+  .option('--endpoint <endpoint>', 'JSBin API, defaults to https://jsbin.com/api/')
   // synchronization options
   .option('--css <selector>', 'selector for CSS container, defaults to "#jsbin-css"')
   .option('--js <selector>', 'selector for JS container, defaults to "#jsbin-javascript"')
@@ -18,9 +21,6 @@ program
   // output configuration
   .option('--silent', 'Do not output status messages')
   .option('--json', 'output status messages as JSON')
-  // service configuration
-  .option('--token <token>', 'JSBin Access Token, defaults to env.JSBIN_TOKEN')
-  .option('--endpoint <endpoint>', 'JSBin API, defaults to https://jsbin.com/api/')
   .parse(process.argv);
 
 var cwd = process.cwd();
@@ -36,7 +36,7 @@ var options = {
   endpoint: program.endpoint,
 };
 
-synchronizeFiles(files, options)
+uploadFiles(files, options)
   .then(handleOutput)
   .catch(handleError);
 
