@@ -14,6 +14,9 @@ var promise = jsbin.backup(directory, options);
 
 // list all remote bins
 var promise = jsbin.list(options);
+
+// delete remote bins
+var promise = jsbin.remove(bins, options);
 ```
 
 
@@ -101,6 +104,8 @@ glob('/path/to/*.html', {realpath: true}, function(error, files) {
 ## API: Backup
 
 ```js
+var path = require('path');
+
 const options = {
   // [optional] JSBin access token
   token: process.env.JSBIN_TOKEN,
@@ -112,7 +117,9 @@ const options = {
   includeSnapshots: false,
 };
 
-jsbin.upload(files, options)
+const directory = path.resolve(process.cwd(), 'backup');
+
+jsbin.backup(directory, options)
   .then(result => console.log('backup result', result))
   .catch(error => console.error(error.stack));
 ```
@@ -189,6 +196,8 @@ const options = {
   // [optional] JSBin API endpoint
   endpoint: 'https://jsbin.com/api/',
 };
+
+const bins = ['aabbcc', 'bbccdd:latest', 'ccddee:3'];
 
 jsbin.remove(bins, options)
   .then(result => console.log('list result', result))
