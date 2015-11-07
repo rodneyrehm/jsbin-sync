@@ -74,7 +74,7 @@ See [File Structure For `upload` command](./upload-file-structure.md) to learn h
 ## CLI: Backup
 
 ```
-➜  bin/jsbin-sync backup --help
+➜  jsbin-sync backup --help
 
   Usage: jsbin-sync-backup [options] <target directory>
 
@@ -96,7 +96,7 @@ See [File Structure For `upload` command](./upload-file-structure.md) to learn h
 ## CLI: List
 
 ```
-➜  bin/jsbin-sync list --help
+➜  jsbin-sync list --help
 
   Usage: jsbin-sync-list [options]
 
@@ -115,7 +115,7 @@ See [File Structure For `upload` command](./upload-file-structure.md) to learn h
 ## CLI: Remove
 
 ```
-➜  bin/jsbin-sync remove --help
+➜  jsbin-sync remove --help
 
   Usage: jsbin-sync-remove <bin...>
 
