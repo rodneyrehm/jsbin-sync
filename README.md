@@ -60,9 +60,9 @@ const options = {
   endpoint: 'https://jsbin.com/api/',
   // [optional] force upload of new snapshot even when files haven't changed
   force: false,
-  // [optional] selector for CSS container element
+  // [optional] Selector for CSS container element
   css: '#jsbin-css',
-  // [optional] selector for JS container element
+  // [optional] Selector for JS container element
   js: '#jsbin-javascript',
 };
 
@@ -138,14 +138,17 @@ When installed globally (`npm install -g jsbin-sync`), a cli is made available:
 
     -h, --help             output usage information
     -V, --version          output the version number
-    --token <token>        JSBin Access Token, defaults to env.JSBIN_TOKEN
-    --endpoint <endpoint>  JSBin API, defaults to https://jsbin.com/api/
-    --css <selector>       selector for CSS container, defaults to "#jsbin-css"
-    --js <selector>        selector for JS container, defaults to "#jsbin-javascript"
-    --force                force upload for unchanged files
+    --token <token>        JSBin access token
+    --endpoint <endpoint>  JSBin API endpoint
+    --css <selector>       Selector for CSS container
+    --js <selector>        Selector for JS container
+    --force                Force upload for unchanged files
     --silent               Do not output status messages
-    --json                 output status messages as JSON
+    --json                 Output status messages as JSON
 ```
+
+Note: Instead of specifying `--token <token>` and `--endpoint <endpoint>` every time, the environment variables `JSBIN_TOKEN` and `JSBIN_ENDPOINT` can be used.
+
 
 ## Changelog
 

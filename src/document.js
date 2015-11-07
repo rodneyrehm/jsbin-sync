@@ -2,10 +2,7 @@
 var cheerio = require('cheerio');
 var redent = require('redent');
 
-var defaults = {
-  css: '#jsbin-css',
-  js: '#jsbin-javascript',
-};
+var defaults = require('./defaults');
 
 module.exports.parse = function(source, options) {
   var page = cheerio.load(source);

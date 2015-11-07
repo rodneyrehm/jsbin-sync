@@ -5,6 +5,7 @@ var program = require('commander');
 var chalk = require('chalk');
 
 var pkg = require('../package.json');
+var defaults = require('../src/defaults');
 var uploadFiles = require('../src/upload');
 
 program
@@ -12,15 +13,15 @@ program
   .description('upload files to JSBin.com')
   .usage('[options] <file ...>')
   // service configuration
-  .option('--token <token>', 'JSBin Access Token, defaults to env.JSBIN_TOKEN')
-  .option('--endpoint <endpoint>', 'JSBin API, defaults to https://jsbin.com/api/')
+  .option('--token <token>', 'JSBin access token', defaults.token)
+  .option('--endpoint <endpoint>', 'JSBin API endpoint', defaults.endpoint)
   // synchronization options
-  .option('--css <selector>', 'selector for CSS container, defaults to "#jsbin-css"')
-  .option('--js <selector>', 'selector for JS container, defaults to "#jsbin-javascript"')
-  .option('--force', 'force upload for unchanged files')
+  .option('--css <selector>', 'Selector for CSS container', defaults.css)
+  .option('--js <selector>', 'Selector for JS container', defaults.js)
+  .option('--force', 'Force upload for unchanged files')
   // output configuration
   .option('--silent', 'Do not output status messages')
-  .option('--json', 'output status messages as JSON')
+  .option('--json', 'Output status messages as JSON')
   .parse(process.argv);
 
 var cwd = process.cwd();
@@ -32,7 +33,7 @@ var options = {
   css: program.css,
   js: program.js,
   force: program.force,
-  token: program.token || process.env.JSBIN_TOKEN,
+  token: program.token,
   endpoint: program.endpoint,
 };
 

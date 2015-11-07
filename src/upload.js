@@ -1,14 +1,17 @@
 
 var JsbinClient = require('jsbin-client');
 var fileToBin = require('./file-to-bin');
+var defaults = require('./defaults');
 
 module.exports = function(files, options) {
   if (!options) {
     options = {};
   }
 
+  defaults(options);
+
   var jsbin = new JsbinClient({
-    token: options.token || process.env.JSBIN_TOKEN,
+    token: options.token,
     endpoint: options.endpoint,
   });
 
