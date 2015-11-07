@@ -16,7 +16,7 @@ While JSBin currently allows maintaining a bin's content in a [gist](http://jsbi
 
 ## Changelog
 
-### 0.3.0 (November 6th 2015) ###
+### 0.3.0 (November 7th 2015) ###
 
 * moving `src/sync.js` to `src/upload.js`
 * package returning map of functions, rather than `upload`
