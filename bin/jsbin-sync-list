@@ -1,0 +1,56 @@
+#!/usr/bin/env node
+
+var path = require('path');
+var program = require('commander');
+var chalk = require('chalk');
+
+var pkg = require('../package.json');
+var defaults = require('../src/defaults');
+var listBins = require('../src/list');
+
+program
+  .version(pkg.version)
+  .description('list all bins on JSBin.com')
+  .usage('[options]')
+  // service configuration
+  .option('--token <token>', 'JSBin access token', defaults.token)
+  .option('--endpoint <endpoint>', 'JSBin API endpoint', defaults.endpoint)
+  // output configuration
+  .option('--json', 'Output result as JSON')
+  .parse(process.argv);
+
+var options = {
+  // service configuration
+  token: program.token,
+  endpoint: program.endpoint,
+};
+
+listBins(options)
+  .then(handleOutput)
+  .catch(handleError);
+
+function handleOutput(map) {
+  if (program.silent) {
+    return;
+  }
+
+  if (program.json) {
+    console.log(JSON.stringify(map, null, 2));
+    return;
+  }
+
+  Object.keys(map).forEach(function(url) {
+    var bin = map[url];
+    console.log(
+      chalk.magenta(bin.url),
+      'at snapshot', chalk.magenta(bin.snapshot),
+      'named', chalk.cyan(bin.title || '<untitled>'),
+      'last changed', chalk.yellow(bin.pretty_last_updated)
+    );
+  });
+}
+
+function handleError(error) {
+  console.error(error.stack);
+  process.exit(1);
+}

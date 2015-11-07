@@ -11,6 +11,9 @@ var promise = jsbin.upload(files, options);
 
 // download bins to disk
 var promise = jsbin.backup(directory, options);
+
+// list all remote bins
+var promise = jsbin.list(options);
 ```
 
 
@@ -124,6 +127,54 @@ jsbin.upload(files, options)
   },
   "bbccdd": {
     "1": "/path/to/bbccdd/bbccdd.1.html"
+  }
+}
+```
+
+
+## API: List
+
+```js
+const options = {
+  // [optional] JSBin access token
+  token: process.env.JSBIN_TOKEN,
+  // [optional] JSBin API endpoint
+  endpoint: 'https://jsbin.com/api/',
+};
+
+jsbin.list(options)
+  .then(result => console.log('list result', result))
+  .catch(error => console.error(error.stack));
+```
+
+`jsbin.list` resolves to the following result data structure:
+
+```js
+{
+  "aabbcc": {
+    "title": "title of bin",
+    "url": "aabbcc",
+    "last_updated": "2015-11-06T15:52:03.000Z",
+    "pretty_last_updated": "19 hours ago",
+    "snapshot": 6,
+    "history": [
+      {
+        "title": "title of bin",
+        "url": "aabbcc",
+        "last_updated": "2015-11-06T15:08:23.000Z",
+        "pretty_last_updated": "20 hours ago",
+        "snapshot": 5
+      },
+      // …
+    ]
+  },
+  "bbccdd": {
+    "title": "title of bin",
+    "url": "bbccdd",
+    "last_updated": "2015-11-06T15:52:02.000Z",
+    "pretty_last_updated": "19 hours ago",
+    "snapshot": 1,
+    "history": []
   }
 }
 ```

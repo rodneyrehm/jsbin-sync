@@ -20,8 +20,8 @@ program
   // synchronization options
   .option('--include-snapshots', 'Download all versions of the bins, rather than only the latest')
   // output configuration
-  .option('--silent', 'Do not output status messages')
-  .option('--json', 'Output status messages as JSON')
+  .option('--silent', 'Do not output result')
+  .option('--json', 'Output result as JSON')
   .parse(process.argv);
 
 // require the target directory

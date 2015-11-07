@@ -11,6 +11,8 @@ When installed globally (`npm install -g jsbin-sync`), a CLI is made available:
 
   Commands:
 
+    list               list all bins on JSBin.com
+    backup <target>    download all bins to target directory
     upload <files...>  synchronize local files to JSBin.com
     help [cmd]         display help for [cmd]
 
@@ -63,8 +65,8 @@ See [File Structure For `upload` command](./upload-file-structure.md) to learn h
     --css <selector>             Selector for CSS container
     --js <selector>              Selector for JS container
     --force                      Force upload for unchanged files
-    --silent                     Do not output status messages
-    --json                       Output status messages as JSON
+    --silent                     Do not output result
+    --json                       Output result as JSON
 ```
 
 
@@ -85,6 +87,25 @@ See [File Structure For `upload` command](./upload-file-structure.md) to learn h
     --endpoint <endpoint>        JSBin API endpoint
     --concurrency <concurrency>  Number of parallel requests
     --include-snapshots          Download all versions of the bins, rather than only the latest
-    --silent                     Do not output status messages
-    --json                       Output status messages as JSON
+    --silent                     Do not output result
+    --json                       Output result as JSON
+```
+
+
+## CLI: List
+
+```
+➜  bin/jsbin-sync list --help
+
+  Usage: jsbin-sync-list [options]
+
+  list all bins on JSBin.com
+
+  Options:
+
+    -h, --help             output usage information
+    -V, --version          output the version number
+    --token <token>        JSBin access token
+    --endpoint <endpoint>  JSBin API endpoint
+    --json                 Output result as JSON
 ```

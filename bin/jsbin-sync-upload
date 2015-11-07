@@ -22,8 +22,8 @@ program
   .option('--js <selector>', 'Selector for JS container', defaults.js)
   .option('--force', 'Force upload for unchanged files')
   // output configuration
-  .option('--silent', 'Do not output status messages')
-  .option('--json', 'Output status messages as JSON')
+  .option('--silent', 'Do not output result')
+  .option('--json', 'Output result as JSON')
   .parse(process.argv);
 
 var files = program.args.map(function(file) {
