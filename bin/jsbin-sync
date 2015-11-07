@@ -7,8 +7,9 @@ program
   .version(pkg.version)
   .description('client to interact with JSBin.com')
   .command('list', 'list all bins on JSBin.com')
+  .command('remove <bin...>', 'delete bins from JSBin.com')
   .command('backup <target>', 'download all bins to target directory')
-  .command('upload <files...>', 'synchronize local files to JSBin.com')
+  .command('upload <file...>', 'synchronize local files to JSBin.com')
 
 program.defaultExecutable = 'help';
 program.parse(process.argv);

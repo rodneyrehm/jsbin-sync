@@ -1,0 +1,71 @@
+#!/usr/bin/env node
+
+var path = require('path');
+var program = require('commander');
+var chalk = require('chalk');
+
+var pkg = require('../package.json');
+var defaults = require('../src/defaults');
+var removeBins = require('../src/remove');
+
+program
+  .version(pkg.version)
+  .description(
+    'delete bins from JSBin.com\n'
+    + '\n  <bin> can be specified as'
+    + '\n    "<url>"                       alias for "<url>:latest"'
+    + '\n    "<url>:latest"                to remove the latest snapshot of the bin'
+    + '\n    "<url>:all"                   to remove the latest snapshot of the bin'
+    + '\n    "<url>:<snapshot>"            to remove a single snapshot of the bin'
+    + '\n    "<url>:<snapshot>,<snapshot>" to remove multiple snapshots of the bin'
+  )
+  .usage('<bin...>')
+  // service configuration
+  .option('--token <token>', 'JSBin access token', defaults.token)
+  .option('--endpoint <endpoint>', 'JSBin API endpoint', defaults.endpoint)
+  // output configuration
+  .option('--json', 'Output result as JSON')
+  .parse(process.argv);
+
+var options = {
+  // service configuration
+  token: program.token,
+  endpoint: program.endpoint,
+};
+
+removeBins(program.args, options)
+  .then(handleOutput)
+  .catch(handleError);
+
+function handleOutput(map) {
+  if (program.silent) {
+    return;
+  }
+
+  if (program.json) {
+    console.log(JSON.stringify(map, null, 2));
+    return;
+  }
+
+  var colors = {
+    'removed': chalk.green,
+    'not removed': chalk.magenta,
+    'not found': chalk.red,
+  };
+
+  Object.keys(map).forEach(function(url) {
+    Object.keys(map[url]).forEach(function(snapshot) {
+      var status = map[url][snapshot];
+      console.log(
+        chalk.magenta(url),
+        'at snapshot', chalk.magenta(snapshot),
+        colors[status](status)
+      );
+    });
+  });
+}
+
+function handleError(error) {
+  console.error(error.stack);
+  process.exit(1);
+}

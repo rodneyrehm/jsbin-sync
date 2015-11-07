@@ -178,3 +178,45 @@ jsbin.list(options)
   }
 }
 ```
+
+
+## API: Remove
+
+```js
+const options = {
+  // [optional] JSBin access token
+  token: process.env.JSBIN_TOKEN,
+  // [optional] JSBin API endpoint
+  endpoint: 'https://jsbin.com/api/',
+};
+
+jsbin.remove(bins, options)
+  .then(result => console.log('list result', result))
+  .catch(error => console.error(error.stack));
+```
+
+`bins` is an array of `<bin>` strings of the following syntax:
+
+```
+<bin> can be specified as
+  "<url>"                       alias for "<url>:latest"
+  "<url>:latest"                to remove the latest snapshot of the bin
+  "<url>:all"                   to remove the latest snapshot of the bin
+  "<url>:<snapshot>"            to remove a single snapshot of the bin
+  "<url>:<snapshot>,<snapshot>" to remove multiple snapshots of the bin
+```
+
+`jsbin.list` resolves to the following result data structure:
+
+```js
+{
+  "aabbcc": {
+    "11": "removed",
+    "10": "not removed",
+    "22": "not found"
+  },
+  "bbccdd": {
+    "*": "not found"
+  }
+}
+```

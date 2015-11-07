@@ -25,6 +25,7 @@ While JSBin currently allows maintaining a bin's content in a [gist](http://jsbi
 * adding option `concurrency` to throttle number of parallel requests
 * adding command `backup` to download all bins
 * adding command `list` to print all known remote bins
+* adding command `remove` to delete remote bins
 
 ### 0.2.1 (November 6th 2015) ###
 

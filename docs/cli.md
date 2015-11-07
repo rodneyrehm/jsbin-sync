@@ -11,10 +11,11 @@ When installed globally (`npm install -g jsbin-sync`), a CLI is made available:
 
   Commands:
 
-    list               list all bins on JSBin.com
-    backup <target>    download all bins to target directory
-    upload <files...>  synchronize local files to JSBin.com
-    help [cmd]         display help for [cmd]
+    list              list all bins on JSBin.com
+    remove <bin...>   delete bins from JSBin.com
+    backup <target>   download all bins to target directory
+    upload <file...>  synchronize local files to JSBin.com
+    help [cmd]        display help for [cmd]
 
   client to interact with JSBin.com
 
@@ -100,6 +101,32 @@ See [File Structure For `upload` command](./upload-file-structure.md) to learn h
   Usage: jsbin-sync-list [options]
 
   list all bins on JSBin.com
+
+  Options:
+
+    -h, --help             output usage information
+    -V, --version          output the version number
+    --token <token>        JSBin access token
+    --endpoint <endpoint>  JSBin API endpoint
+    --json                 Output result as JSON
+```
+
+
+## CLI: Remove
+
+```
+➜  bin/jsbin-sync remove --help
+
+  Usage: jsbin-sync-remove <bin...>
+
+  delete bins from JSBin.com
+
+  <bin> can be specified as
+    "<url>"                       alias for "<url>:latest"
+    "<url>:latest"                to remove the latest snapshot of the bin
+    "<url>:all"                   to remove the latest snapshot of the bin
+    "<url>:<snapshot>"            to remove a single snapshot of the bin
+    "<url>:<snapshot>,<snapshot>" to remove multiple snapshots of the bin
 
   Options:
 
