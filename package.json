@@ -9,6 +9,7 @@
     "cheerio": "^0.19.0",
     "commander": "^2.9.0",
     "es6-denodeify": "^0.1.5",
+    "es6-promise-pool": "^2.4.1",
     "jsbin-client": "^0.1.1",
     "redent": "^1.0.0"
   },

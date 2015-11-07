@@ -126,8 +126,29 @@ When installed globally (`npm install -g jsbin-sync`), a cli is made available:
 
     -h, --help     output usage information
     -V, --version  output the version number
+```
 
+### Default Options
 
+The following deault values are used unless overwritten via CLI arguments:
+
+```js
+{
+  // service configuration
+  token: process.env.JSBIN_TOKEN,
+  endpoint: process.env.JSBIN_ENDPOINT || 'https://jsbin.com/api/',
+  concurrency: 5,
+  // bin document configuration
+  css: '#jsbin-css',
+  js: '#jsbin-javascript',
+}
+```
+
+**Note:** Instead of specifying `--token <token>` and `--endpoint <endpoint>` every time, the environment variables `JSBIN_TOKEN` and `JSBIN_ENDPOINT` can be used.
+
+### CLI Upload
+
+```
 ➜  jsbin-sync upload --help
 
   Usage: jsbin-sync-upload [options] <file ...>
@@ -136,19 +157,17 @@ When installed globally (`npm install -g jsbin-sync`), a cli is made available:
 
   Options:
 
-    -h, --help             output usage information
-    -V, --version          output the version number
-    --token <token>        JSBin access token
-    --endpoint <endpoint>  JSBin API endpoint
-    --css <selector>       Selector for CSS container
-    --js <selector>        Selector for JS container
-    --force                Force upload for unchanged files
-    --silent               Do not output status messages
-    --json                 Output status messages as JSON
+    -h, --help                   output usage information
+    -V, --version                output the version number
+    --token <token>              JSBin access token
+    --endpoint <endpoint>        JSBin API endpoint
+    --concurrency <concurrency>  Number of parallel requests
+    --css <selector>             Selector for CSS container
+    --js <selector>              Selector for JS container
+    --force                      Force upload for unchanged files
+    --silent                     Do not output status messages
+    --json                       Output status messages as JSON
 ```
-
-Note: Instead of specifying `--token <token>` and `--endpoint <endpoint>` every time, the environment variables `JSBIN_TOKEN` and `JSBIN_ENDPOINT` can be used.
-
 
 ## Changelog
 
@@ -158,6 +177,7 @@ Note: Instead of specifying `--token <token>` and `--endpoint <endpoint>` every 
 * package returning map of functions, rather than `upload`
 * moving CLI code to `/bin`
 * switching CLI pattern to sub-commands
+* adding `concurrency` option to throttle number of parallel requests
 
 ### 0.2.1 (November 6th 2015) ###
 

@@ -8,6 +8,7 @@ var pkg = require('../package.json');
 var defaults = require('../src/defaults');
 var uploadFiles = require('../src/upload');
 
+var cwd = process.cwd();
 program
   .version(pkg.version)
   .description('upload files to JSBin.com')
@@ -15,6 +16,7 @@ program
   // service configuration
   .option('--token <token>', 'JSBin access token', defaults.token)
   .option('--endpoint <endpoint>', 'JSBin API endpoint', defaults.endpoint)
+  .option('--concurrency <concurrency>', 'Number of parallel requests', defaults.concurrent, defaults.concurrency)
   // synchronization options
   .option('--css <selector>', 'Selector for CSS container', defaults.css)
   .option('--js <selector>', 'Selector for JS container', defaults.js)
@@ -24,17 +26,19 @@ program
   .option('--json', 'Output status messages as JSON')
   .parse(process.argv);
 
-var cwd = process.cwd();
 var files = program.args.map(function(file) {
   return path.resolve(cwd, file);
 });
 
 var options = {
+  // service configuration
+  token: program.token,
+  endpoint: program.endpoint,
+  concurrency: program.concurrency,
+  // synchronization options
   css: program.css,
   js: program.js,
   force: program.force,
-  token: program.token,
-  endpoint: program.endpoint,
 };
 
 uploadFiles(files, options)
