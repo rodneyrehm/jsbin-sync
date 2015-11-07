@@ -1,7 +1,7 @@
 {
   "name": "jsbin-sync",
-  "version": "0.2.1",
-  "description": "Simple client to synchronize files to JSBin.com",
+  "version": "0.3.0",
+  "description": "client to interact with JSBin.com",
   "main": "src/index.js",
   "bin": "bin/jsbin-sync",
   "dependencies": {
