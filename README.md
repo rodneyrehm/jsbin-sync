@@ -16,6 +16,10 @@ While JSBin currently allows maintaining a bin's content in a [gist](http://jsbi
 
 ## Changelog
 
+### 0.3.1 (November 13th 2015) ###
+
+* fixing `upload` command to properly map input files to output states
+
 ### 0.3.0 (November 7th 2015) ###
 
 * moving `src/sync.js` to `src/upload.js`
